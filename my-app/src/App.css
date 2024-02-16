@@ -1,0 +1,15 @@
+
+body {
+    text-align: center;
+}
+
+.header {
+    font-size: larger;
+    text-decoration: underline double black;
+    margin-bottom: 40px;
+}
+
+.react-calendar {
+    margin: auto;
+}
+
