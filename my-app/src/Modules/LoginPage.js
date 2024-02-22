@@ -6,7 +6,6 @@ function LoginPage() {
     const navigate = useNavigate();
 
     const handleButtonClick = () => {
-        console.log("Button Clicked");
         navigate({
             pathname: '/calendar',
         });
@@ -25,5 +24,4 @@ function LoginPage() {
     );
 
 }
-console.log("LoginPage rendered");
 export default LoginPage;
