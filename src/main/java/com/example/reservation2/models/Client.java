@@ -3,12 +3,16 @@ package com.example.reservation2.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Data
 @Entity
 @ToString
-
+@Table(name = "Clients")
+@Getter
+@Setter
 public class Client {
 
     @Id
