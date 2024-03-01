@@ -10,14 +10,14 @@ import lombok.ToString;
 @Data
 @Entity
 @ToString
-@Table(name = "Clients")
+@Table(name = "Users")
 @Getter
 @Setter
-public class Client {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long clientId;
+    private long userId;
 
     @Column(nullable = false)
     private String firstName;
