@@ -24,8 +24,10 @@ public class BookingDate {
     private Date date;
 
     @ManyToOne
+    @JoinColumn(name = "booking_id")
     private Booking booking;
 
     @ManyToOne
+    @JoinColumn(name = "room_id" )
     private Room room;
 }
