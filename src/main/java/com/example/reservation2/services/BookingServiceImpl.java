@@ -1,9 +1,10 @@
 package com.example.reservation2.services;
 
 import com.example.reservation2.models.Booking;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class BookingServiceImpl implements BookingService{
     @Override
     public Booking createBooking(Booking booking) {
