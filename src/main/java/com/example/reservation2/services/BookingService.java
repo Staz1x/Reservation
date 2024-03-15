@@ -1,6 +1,7 @@
 package com.example.reservation2.services;
 
 import com.example.reservation2.models.Booking;
+import com.example.reservation2.models.User;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface BookingService{
 
     Booking getBookingById(Long id);
 
-    List<Booking> getBookingsByUserId(Long userId);
+    List<Booking> getBookingsByUser(User user);
 
     void deleteBookingById(Long id);
 }

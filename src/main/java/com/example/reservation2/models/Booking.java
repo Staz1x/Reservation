@@ -21,8 +21,9 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long bookingId;
 
-
-    private long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @GeneratedValue
     private Timestamp bookingDate;

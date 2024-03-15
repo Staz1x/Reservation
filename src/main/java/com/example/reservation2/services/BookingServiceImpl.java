@@ -1,6 +1,7 @@
 package com.example.reservation2.services;
 
 import com.example.reservation2.models.Booking;
+import com.example.reservation2.models.User;
 import com.example.reservation2.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,9 @@ public class BookingServiceImpl implements BookingService{
 
     @Autowired
     private BookingRepository bookingRepository;
+
+
+
     @Override
     public Booking createBooking(Booking booking) {
         return bookingRepository.save(booking);
@@ -27,8 +31,8 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
-    public List<Booking> getBookingsByUserId(Long userId) {
-        return null;
+    public List<Booking> getBookingsByUser(User user) {
+        return bookingRepository.findByUser(user);
     }
 
     @Override
