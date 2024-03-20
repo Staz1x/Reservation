@@ -8,10 +8,7 @@ import com.example.reservation2.services.BookingService;
 import com.example.reservation2.services.UserService;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +25,11 @@ public class BookingController {
     public BookingController(BookingService bookingService, UserService userService){
         this.bookingService = bookingService;
         this.userService = userService;
+    }
+
+    @GetMapping
+    public List<Booking> getAllBookings() {
+        return bookingService.getAllBookings();
     }
 
     @GetMapping("/user/{userId}")
@@ -56,6 +58,22 @@ public class BookingController {
         }
         return ResponseEntity.ok(bookings);
     }*/
+
+    @PostMapping
+    public Booking createBooking(@RequestBody Booking booking) {
+        // Here you can handle creation of Booking and BookingDate
+        // Let's assume BookingDate needs to be updated separately
+        // You may also perform any validation or business logic checks here
+
+        // Save the booking
+        Booking createdBooking = bookingService.createBooking(booking);
+
+        // Update BookingDate - Example code (you may need to adjust based on your logic)
+        // BookingDate updatedBookingDate = updateBookingDate(booking.getBookingDate());
+
+        // Return the created booking
+        return createdBooking;
+    }
 
 
 
