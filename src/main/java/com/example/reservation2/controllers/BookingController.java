@@ -38,7 +38,6 @@ public class BookingController {
         }
         List<Booking> bookings = bookingService.getBookingsByUser(user);
         if (bookings.isEmpty()) {
-
             throw new BookingNotFoundException("No bookings found for user: " + userId);
         }
         return bookings;
