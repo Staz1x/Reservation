@@ -1,5 +1,6 @@
 package com.example.reservation2.models;
 
+import com.example.reservation2.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,8 +19,9 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String roleName;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
+    private UserRole roleName;
 
 }

@@ -23,7 +23,7 @@ public class User {
     private String firstName;
 
     @Column(nullable = false)
-    private String lastname;
+    private String lastName;
 
     @Column(nullable = false)
     private String phoneNr;

@@ -25,7 +25,7 @@ public class Booking {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @GeneratedValue
+
     private Timestamp bookingDate;
 
 
