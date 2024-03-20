@@ -1,5 +1,6 @@
 package com.example.reservation2.controllers;
 
+import com.example.reservation2.Exceptions.BookingNotFoundException;
 import com.example.reservation2.Exceptions.UserNotFoundException;
 import com.example.reservation2.models.Booking;
 import com.example.reservation2.models.User;
@@ -33,10 +34,14 @@ public class BookingController {
     public List<Booking> getBookingsByUserId(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
         if (user == null) {
-
             throw new UserNotFoundException("User not found with id: " + userId);
         }
-        return bookingService.getBookingsByUser(user);
+        List<Booking> bookings = bookingService.getBookingsByUser(user);
+        if (bookings.isEmpty()) {
+
+            throw new BookingNotFoundException("No bookings found for user: " + userId);
+        }
+        return bookings;
     }
 /*    @GetMapping("/user/{userId}")
     public ResponseEntity<List<Booking>> getBookingsByUserId(@PathVariable Long userId) {
