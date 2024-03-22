@@ -25,5 +25,7 @@ public class Room {
 
     private String roomType;
 
+    private int capacity;
+
 
 }
