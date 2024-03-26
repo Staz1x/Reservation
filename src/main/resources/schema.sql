@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
                                      password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS user_roles (
+CREATE TABLE IF NOT EXISTS user_role (
                                           user_id BIGINT,
                                           role_id BIGINT,
                                           PRIMARY KEY (user_id, role_id),
