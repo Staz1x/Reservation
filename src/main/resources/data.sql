@@ -3,6 +3,9 @@ INSERT INTO roles (role_name) VALUES ('ROLE_ADMIN'), ('ROLE_USER');
 INSERT INTO users (first_name, last_name, phone_nr, email, password)
 VALUES ('John', 'Doe', '123456789', 'john@example.com', 'password123');
 
+INSERT INTO user_roles (user_id, role_id)
+VALUES (1, 1);
+
 INSERT INTO rooms (room_number, price, room_type, capacity)
 VALUES ('101', 100.00, 'Standard', 2),
        ('102', 150.00, 'Deluxe', 3);

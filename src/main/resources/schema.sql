@@ -12,6 +12,14 @@ CREATE TABLE IF NOT EXISTS users (
                                      password VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS user_roles (
+                                          user_id BIGINT,
+                                          role_id BIGINT,
+                                          PRIMARY KEY (user_id, role_id),
+                                          FOREIGN KEY (user_id) REFERENCES users(user_id),
+                                          FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
 CREATE TABLE IF NOT EXISTS rooms (
                                      room_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                      room_number VARCHAR(20),
