@@ -1,10 +1,8 @@
-INSERT INTO roles (role_name) VALUES ('ROLE_ADMIN'), ('ROLE_USER');
+INSERT INTO roles (role_name) VALUES ('ADMIN'), ('USER');
 
-INSERT INTO users (first_name, last_name, phone_nr, email, password)
-VALUES ('John', 'Doe', '123456789', 'john@example.com', 'password123');
-
-INSERT INTO user_role (user_id, role_id)
-VALUES (1, 1);
+INSERT INTO users (first_name, last_name, phone_nr, email, password, role_id)
+VALUES ('John', 'Doe', '123456789', 'john@example.com', 'password123', 1),
+('May', 'Day', '987654321', 'may@example.com', 'password456', 2);
 
 INSERT INTO rooms (room_number, price, room_type, capacity)
 VALUES ('101', 100.00, 'Standard', 2),

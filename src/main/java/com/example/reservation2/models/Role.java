@@ -1,7 +1,6 @@
 package com.example.reservation2.models;
 
-
-import com.example.reservation2.enums.UserRoleNames;
+import com.example.reservation2.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,8 +26,6 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    private UserRoleNames roleName;
+    private UserRole roleName;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<UserRole> userRoles = new HashSet<>();
 }

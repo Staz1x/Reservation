@@ -1,26 +1,21 @@
-CREATE TABLE IF NOT EXISTS roles (
+CREATE TABLE roles (
                                      id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                      role_name VARCHAR(255) NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
                                      user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                      first_name VARCHAR(255) NOT NULL,
                                      last_name VARCHAR(255) NOT NULL,
                                      phone_nr VARCHAR(20) NOT NULL,
                                      email VARCHAR(255) NOT NULL UNIQUE,
-                                     password VARCHAR(255) NOT NULL
+                                     password VARCHAR(255) NOT NULL,
+                                     role_id BIGINT,
+                                     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
-CREATE TABLE IF NOT EXISTS user_role (
-                                          user_id BIGINT,
-                                          role_id BIGINT,
-                                          PRIMARY KEY (user_id, role_id),
-                                          FOREIGN KEY (user_id) REFERENCES users(user_id),
-                                          FOREIGN KEY (role_id) REFERENCES roles(id)
-);
 
-CREATE TABLE IF NOT EXISTS rooms (
+CREATE TABLE rooms (
                                      room_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                      room_number VARCHAR(20),
                                      price DECIMAL(10, 2),
@@ -28,7 +23,7 @@ CREATE TABLE IF NOT EXISTS rooms (
                                      capacity INT
 );
 
-CREATE TABLE IF NOT EXISTS bookings (
+CREATE TABLE bookings (
                                         booking_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                         user_id BIGINT,
                                         booking_date TIMESTAMP,
@@ -37,7 +32,7 @@ CREATE TABLE IF NOT EXISTS bookings (
                                         FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE IF NOT EXISTS booking_dates (
+CREATE TABLE booking_dates (
                                              booking_date_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                              date DATE,
                                              booking_id BIGINT,
