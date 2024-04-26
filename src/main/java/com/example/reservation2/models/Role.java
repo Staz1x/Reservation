@@ -2,14 +2,12 @@ package com.example.reservation2.models;
 
 import com.example.reservation2.enums.UserRole;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity
 @Getter
 @Setter
