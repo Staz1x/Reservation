@@ -129,7 +129,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getBookingById() {
+    void testGetBookingById() {
 
         Long bookingId = 5L;
 
