@@ -14,16 +14,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.sql.Timestamp;
-import java.time.Clock;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.sql.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class BookingServiceTest {
@@ -42,6 +41,7 @@ class BookingServiceTest {
     public void setup(){
         User testUser = new User();
         Role role = new Role();
+        mockBooking = new Booking();
 
         role.setId(1L);
         role.setRoleName(UserRole.USER);
@@ -56,29 +56,42 @@ class BookingServiceTest {
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
+        // Skapa java.util.Date för startdatumet
         Calendar startCalendar = Calendar.getInstance();
         startCalendar.set(2024, Calendar.APRIL, 26); // År, månad, dag
-        Date startDate = (Date) startCalendar.getTime();
+        Date startDateUtil = new Date(startCalendar.getTimeInMillis());
 
+        // Konvertera java.util.Date till java.sql.Date
+        Date startDateSql = new Date(startDateUtil.getTime());
+
+        // Skapa java.util.Date för slutdatumet
         Calendar endCalendar = Calendar.getInstance();
         endCalendar.set(2024, Calendar.APRIL, 27); // År, månad, dag
-        Date endDate = (Date) endCalendar.getTime();
+        Date endDateUtil = new Date(endCalendar.getTimeInMillis());
 
+        // Konvertera java.util.Date till java.sql.Date
+        Date endDateSql = new Date(endDateUtil.getTime());
+
+        // Ställ in bokningen med användare och datum
         mockBooking.setUser(testUser);
         mockBooking.setBookingId(2);
         mockBooking.setBookingDate(timestamp);
-        mockBooking.setStartDate(startDate);
-        mockBooking.setEndDate(endDate);
+        mockBooking.setStartDate(startDateSql);
+        mockBooking.setEndDate(endDateSql);
 
+        // Skapa en bokningsdatum och lägg till i mockbokningen
         BookingDate bookingDate = new BookingDate();
 
+        // Skapa ett datum för bokningsdatumet
         Calendar bookingDateCalendar = Calendar.getInstance();
         bookingDateCalendar.set(2024, Calendar.APRIL, 26); // År, månad, dag
         Date date = new Date(bookingDateCalendar.getTimeInMillis());
         bookingDate.setDate(date);
 
+        // Tilldela mockbokningen till bokningsdatumet
         bookingDate.setBooking(mockBooking);
 
+        // Lägg till bokningsdatumet i mockbokningen
         mockBooking.getBookingDates().add(bookingDate);
 
     }
@@ -88,10 +101,30 @@ class BookingServiceTest {
 
     @Test
     void testCreateBooking() {
+        when(bookingRepository.save(any(Booking.class))).thenReturn(mockBooking);
+
+        Booking createdBooking = bookingService.createBooking(mockBooking);
+
+        verify(bookingRepository, times(1)).save(mockBooking);
+
+        assertEquals(mockBooking, createdBooking, "Returned booking should be equal to mockBooking");
     }
 
     @Test
-    void getAllBookings() {
+    void testGetAllBookings() {
+
+        List<Booking> mockBookings = new ArrayList<>();
+
+        mockBookings.add(mockBooking);
+
+        when(bookingRepository.findAll()).thenReturn(mockBookings);
+
+        List<Booking> actualBookings = bookingService.getAllBookings();
+
+        assertEquals(mockBookings, actualBookings);
+        assertEquals(mockBookings.size(), actualBookings.size());
+        verify(bookingRepository, times(1)).findAll();
+
     }
 
     @Test
