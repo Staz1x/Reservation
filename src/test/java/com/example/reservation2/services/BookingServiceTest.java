@@ -21,6 +21,7 @@ import java.sql.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -74,7 +75,7 @@ class BookingServiceTest {
 
         // Ställ in bokningen med användare och datum
         mockBooking.setUser(testUser);
-        mockBooking.setBookingId(2);
+        mockBooking.setBookingId(2L);
         mockBooking.setBookingDate(timestamp);
         mockBooking.setStartDate(startDateSql);
         mockBooking.setEndDate(endDateSql);
@@ -129,6 +130,23 @@ class BookingServiceTest {
 
     @Test
     void getBookingById() {
+
+        Long bookingId = 5L;
+
+        Long falseBookingId = 1L;
+
+        when(bookingRepository.findById(bookingId)).thenReturn(java.util.Optional.ofNullable(mockBooking));
+
+        Booking actualBooking = bookingService.getBookingById(bookingId);
+        Booking falseBooking = bookingService.getBookingById(falseBookingId);
+
+
+        assertEquals(mockBooking, actualBooking);
+        assertNotEquals(mockBooking, falseBooking);
+
+        verify(bookingRepository, times(1)).findById(bookingId);
+
+
     }
 
     @Test
