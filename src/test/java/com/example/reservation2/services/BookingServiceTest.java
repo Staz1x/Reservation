@@ -35,25 +35,29 @@ class BookingServiceTest {
     private BookingService bookingService;
 
     Booking mockBooking;
+    
+    User mockUser;
 
 
 
     @BeforeEach
     public void setup(){
-        User testUser = new User();
+        mockUser = new User();
         Role role = new Role();
-        mockBooking = new Booking();
+
 
         role.setId(1L);
         role.setRoleName(UserRole.USER);
 
-        testUser.setUserId(1);
-        testUser.setEmail("test@testmail.se");
-        testUser.setFirstName("Teston");
-        testUser.setLastName("Testsson");
-        testUser.setRole(role);
-        testUser.setPassword("123456");
-        testUser.setPhoneNr("0703000000");
+        mockUser.setUserId(1);
+        mockUser.setEmail("test@testmail.se");
+        mockUser.setFirstName("Teston");
+        mockUser.setLastName("Testsson");
+        mockUser.setRole(role);
+        mockUser.setPassword("123456");
+        mockUser.setPhoneNr("0703000000");
+
+        mockBooking = new Booking();
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -74,7 +78,7 @@ class BookingServiceTest {
         Date endDateSql = new Date(endDateUtil.getTime());
 
         // Ställ in bokningen med användare och datum
-        mockBooking.setUser(testUser);
+        mockBooking.setUser(mockUser);
         mockBooking.setBookingId(2L);
         mockBooking.setBookingDate(timestamp);
         mockBooking.setStartDate(startDateSql);
@@ -140,7 +144,6 @@ class BookingServiceTest {
         Booking actualBooking = bookingService.getBookingById(bookingId);
         Booking falseBooking = bookingService.getBookingById(falseBookingId);
 
-
         assertEquals(mockBooking, actualBooking);
         assertNotEquals(mockBooking, falseBooking);
 
@@ -151,9 +154,27 @@ class BookingServiceTest {
 
     @Test
     void getBookingsByUser() {
+
+        List<Booking> expectedBookings = new ArrayList<>();
+
+        expectedBookings.add(mockBooking);
+
+        when(bookingRepository.findByUser(mockUser)).thenReturn(expectedBookings);
+
+        List<Booking> actualBookings = bookingService.getBookingsByUser(mockUser);
+
+        assertEquals(expectedBookings, actualBookings);
+
+        verify(bookingRepository, times(1)).findByUser(mockUser);
+
     }
 
     @Test
     void deleteBookingById() {
+        Long bookingId = mockBooking.getBookingId();
+
+        bookingService.deleteBookingById(bookingId);
+
+        verify(bookingRepository, times(1)).deleteById(bookingId);
     }
 }
