@@ -6,7 +6,6 @@ import com.example.reservation2.models.BookingDate;
 import com.example.reservation2.models.Role;
 import com.example.reservation2.models.User;
 import com.example.reservation2.repositories.BookingRepository;
-import com.example.reservation2.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
