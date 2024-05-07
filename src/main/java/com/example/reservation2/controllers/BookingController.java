@@ -32,7 +32,7 @@ public class BookingController {
         return bookingService.getAllBookings();
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/booking/{userId}")
     public List<Booking> getBookingsByUserId(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
         if (user == null) {
