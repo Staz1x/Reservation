@@ -2,10 +2,7 @@ package com.example.reservation2.controllers;
 
 import com.example.reservation2.models.User;
 import com.example.reservation2.services.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +24,10 @@ public class UserController {
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id){
         return userService.getUserById(id);
+    }
+
+    @PostMapping("/")
+    public User createUser(@RequestBody User user){
+        return userService.createUser(user);
     }
 }
