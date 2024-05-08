@@ -1,6 +1,7 @@
 import {useState} from "react";
 import Button from "./Button";
 import {useNavigate} from "react-router-dom";
+import './LoginPage.css'
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -32,30 +33,31 @@ function LoginPage() {
 
     return (
 
-        <div>
+        <div className="login-container">
 
             <form onSubmit={(e) => {
                 e.preventDefault();
                 handleLogin();
-            }}>
+            }} className="login-form">
+                <h2>Login</h2>
                 <label>
-                    Username:
+                    Email:
                     <input
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        className="login-input"
                     />
                 </label>
-                <br/>
                 <label>
                     Password:
                     <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        className="login-input"
                     />
                 </label>
-                <br/>
                 <Button type="submit" text="LOGIN"/>
             </form>
         </div>
