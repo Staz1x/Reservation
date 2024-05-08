@@ -3,8 +3,18 @@ body {
     text-align: center;
 }
 
+.calendarPage {
+    margin-top: 120px;
+}
+
 .header {
     font-size: larger;
+    text-decoration: underline double black;
+    margin-bottom: 40px;
+}
+
+.header1 {
+    font-size: x-large;
     text-decoration: underline double black;
     margin-bottom: 40px;
 }

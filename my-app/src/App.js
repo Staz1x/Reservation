@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import LoginPage from "./Modules/LoginPage"
 import CalendarPage from "./Modules/CalendarPage";
+import Rooms from "./Modules/Rooms"
 import "./App.css"
 
 
@@ -16,6 +17,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/calendar" element={<CalendarPage />} />
+                <Route path="/rooms" element={<Rooms />} />
             </Routes>
         </Router>
     );

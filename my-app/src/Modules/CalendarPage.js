@@ -22,12 +22,14 @@ function CalendarPage() {
 
     const handleButtonClick = () => {
         navigate({
-            pathname: '/booking',
+            pathname: '/rooms',
         });
     };
 
     return (
-        <div> <p className="header"> Select date </p>
+        <div className="calendarPage">
+
+            <p className="header"> Select date for your stay</p>
             <Calendar
                 onChange={onChange}
                 value={value}
@@ -36,7 +38,7 @@ function CalendarPage() {
                 selectRange={true} />
             <Button
                 onClick={handleButtonClick}
-                text="NEXT2"
+                text="Book"
             />
         </div>
     );
