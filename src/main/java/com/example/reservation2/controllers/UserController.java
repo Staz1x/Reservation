@@ -15,13 +15,11 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private UserService userService;
-    @Autowired
+    private final UserService userService;
     private final AuthService authService;
 
-    public UserController(UserService userService){
+    public UserController(UserService userService, AuthService authService) {
         this.userService = userService;
-    public UserController(AuthService authService) {
         this.authService = authService;
     }
 
@@ -37,6 +35,8 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
+    }
+
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id){
         return userService.getUserById(id);
