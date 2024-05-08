@@ -6,6 +6,7 @@ import com.example.reservation2.models.User;
 import java.util.List;
 
 public interface BookingService{
+
     Booking createBooking(Booking booking);
 
     List<Booking> getAllBookings();
