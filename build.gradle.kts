@@ -2,6 +2,8 @@ plugins {
     java
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
+    jacoco
+    `jacoco-report-aggregation`
 }
 
 group = "com.example"
@@ -36,4 +38,11 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
 }
