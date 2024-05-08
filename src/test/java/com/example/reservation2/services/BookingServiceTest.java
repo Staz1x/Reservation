@@ -8,6 +8,8 @@ import com.example.reservation2.models.User;
 import com.example.reservation2.repositories.BookingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -27,14 +29,15 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class BookingServiceTest {
 
-    @MockBean
+    @Mock
     private BookingRepository bookingRepository;
 
-    @Autowired
-    private BookingService bookingService;
-
+    @InjectMocks
+    private BookingServiceImpl bookingService;
+    @Mock
     Booking mockBooking;
-    
+
+    @Mock
     User mockUser;
 
 
