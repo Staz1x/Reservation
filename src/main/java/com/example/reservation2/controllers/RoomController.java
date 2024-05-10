@@ -1,5 +1,6 @@
 package com.example.reservation2.controllers;
 
+import com.example.reservation2.Exceptions.RoomNotFoundException;
 import com.example.reservation2.models.Room;
 import com.example.reservation2.services.RoomService;
 
@@ -25,7 +26,12 @@ public class RoomController {
 
     @GetMapping("/{id}")
     public Room getRoomById(@PathVariable Long id) {
-        return roomService.getRoomById(id);
+        Room room = roomService.getRoomById(id);
+
+        if(room == null){
+            throw new RoomNotFoundException("Can not found room number " + room.getRoomNumber());
+        }
+        return room;
     }
 
     @PostMapping("/")
