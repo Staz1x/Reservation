@@ -4,6 +4,7 @@ import com.example.reservation2.Exceptions.BookingNotFoundException;
 import com.example.reservation2.Exceptions.UserNotFoundException;
 import com.example.reservation2.models.Booking;
 import com.example.reservation2.models.User;
+import com.example.reservation2.repositories.BookingRepository;
 import com.example.reservation2.services.BookingService;
 import com.example.reservation2.services.UserService;
 
@@ -73,6 +74,11 @@ public class BookingController {
 
         // Return the created booking
         return createdBooking;
+    }
+
+    @DeleteMapping("/")
+    void deleteBookingById(Long id){
+        bookingService.deleteBookingById(id);
     }
 
 
