@@ -29,7 +29,7 @@ public class RoomController {
         Room room = roomService.getRoomById(id);
 
         if(room == null){
-            throw new RoomNotFoundException("Can not found room number " + room.getRoomNumber());
+            throw new RoomNotFoundException("Can not found room" + id);
         }
         return room;
     }
@@ -41,6 +41,11 @@ public class RoomController {
 
     @DeleteMapping("/{id}")
     public void deleteRoomById(@PathVariable Long id) {
+        Room room = roomService.getRoomById(id);
+
+        if(room == null){
+            throw new RoomNotFoundException("Can not found room number " + id);
+        }
         roomService.deleteRoomById(id);
     }
 
