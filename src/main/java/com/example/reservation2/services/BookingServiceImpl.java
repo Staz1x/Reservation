@@ -15,10 +15,20 @@ public class BookingServiceImpl implements BookingService{
 
     private BookingRepository bookingRepository;
 
-    private BookingDateRepository bookingDateRepository;
+    private BookingDateService bookingDateService;
+
+    private BookingService bookingService;
+
+    private  BookingDateRepository bookingDateRepository;
+
+
+
     @Autowired
-    public BookingServiceImpl(BookingRepository bookingRepository, BookingDateRepository bookingDateRepository){
+    public BookingServiceImpl(BookingRepository bookingRepository, BookingDateService bookingDateService,
+                               BookingDateRepository bookingDateRepository){
         this.bookingRepository = bookingRepository;
+        this.bookingDateService = bookingDateService;
+
         this.bookingDateRepository = bookingDateRepository;
     }
 
@@ -26,11 +36,23 @@ public class BookingServiceImpl implements BookingService{
 
     @Override
     public Booking createBooking(Booking booking) {
-        // Spara bokningen först
-        booking = bookingRepository.save(booking);
+        // Skapa en ny bokning
+        Booking createdBooking = bookingService.createBooking(booking);
 
+        // Hämta det skapade bookingId
+        Long bookingId = createdBooking.getBookingId();
 
-        return booking;
+        // Uppdatera bookingDate med bookingId
+        for (BookingDate bookingDate : createdBooking.getBookingDates()) {
+            bookingDate.setBooking(createdBooking);
+        }
+
+        // Spara eventuella uppdaterade bookingDates
+        for (BookingDate bookingDate : createdBooking.getBookingDates()) {
+            bookingDateService.saveBookingDate(bookingDate);
+        }
+
+        return createdBooking;
     }
 
     @Override

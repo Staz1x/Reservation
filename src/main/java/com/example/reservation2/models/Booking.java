@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -23,22 +24,22 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long bookingId;
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
 
-    @ManyToOne
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<BookingDate> bookingDates = new ArrayList<>();
-
+    @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
+    private Set<BookingDate> bookingDates;
 
     private Timestamp bookingDate;
 
 
-    private Date startDate;
-
-    private Date endDate;
 
     public static Booking fromString(String bookingId) {
         // Skapa en ny instans av Booking och returnera den

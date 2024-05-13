@@ -12,6 +12,8 @@ public class BookingDateServiceImpl implements BookingDateService{
         this.bookingDateRepository = bookingDateRepository;
     }
 
+
+
     @Override
     public BookingDate saveBookingDate(BookingDate bookingDate) {
         return bookingDateRepository.save(bookingDate);

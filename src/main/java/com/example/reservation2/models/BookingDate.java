@@ -20,14 +20,14 @@ public class BookingDate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long bookingDateId;
 
-
+    @Temporal(TemporalType.DATE)
     private Date date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "booking_id")
     private Booking booking;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
     private Room room;
 }
