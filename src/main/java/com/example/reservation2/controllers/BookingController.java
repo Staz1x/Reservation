@@ -87,12 +87,6 @@ public Booking createBooking(@RequestBody Booking booking) {
     // Spara bokningen först
     Booking createdBooking = bookingService.createBooking(booking);
 
-    // Loopa igenom och spara varje bokningsdatum med referens till den sparade bokningen
-    for (BookingDate bookingDate : createdBooking.getBookingDates()) {
-        bookingDate.setBooking(createdBooking);
-        bookingDateService.saveBookingDate(bookingDate);
-    }
-
     return createdBooking;
 }
 

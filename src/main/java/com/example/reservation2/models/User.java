@@ -43,6 +43,9 @@ public class User {
     @JsonIgnore
     private Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Booking> bookings = new HashSet<>();
+
 
 
 }
