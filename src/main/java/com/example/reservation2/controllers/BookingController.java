@@ -1,16 +1,21 @@
 package com.example.reservation2.controllers;
 
 import com.example.reservation2.Exceptions.BookingNotFoundException;
+import com.example.reservation2.Exceptions.RoomNotFoundException;
+import com.example.reservation2.Exceptions.RoomUnavailableException;
 import com.example.reservation2.Exceptions.UserNotFoundException;
 import com.example.reservation2.models.Booking;
 import com.example.reservation2.models.BookingDate;
+import com.example.reservation2.models.Room;
 import com.example.reservation2.models.User;
 import com.example.reservation2.repositories.BookingRepository;
 import com.example.reservation2.services.BookingDateService;
 import com.example.reservation2.services.BookingService;
+import com.example.reservation2.services.RoomService;
 import com.example.reservation2.services.UserService;
 
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +32,16 @@ public class BookingController {
 
     private UserService userService;
 
+    private RoomService roomService;
+
 
 
     public BookingController(BookingService bookingService, UserService userService,
-                             BookingDateService bookingDateService){
+                             BookingDateService bookingDateService, RoomService roomService){
         this.bookingService = bookingService;
         this.userService = userService;
         this.bookingDateService = bookingDateService;
+        this.roomService = roomService;
     }
 
     @GetMapping
@@ -83,11 +91,29 @@ public class BookingController {
 //        return ResponseEntity.ok(createdBooking);
 //    }
 @PostMapping("/")
-public Booking createBooking(@RequestBody Booking booking) {
-    // Spara bokningen först
-    Booking createdBooking = bookingService.createBooking(booking);
+public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
+    // Kontrollera om användaren finns
+    User user = userService.getUserById(booking.getUser().getUserId());
+    if (user == null) {
+        throw new UserNotFoundException("User not found with id: " + booking.getUser().getUserId());
+    }
 
-    return createdBooking;
+    // Kontrollera om rummet finns
+    Room room = roomService.getRoomById(booking.getRoom().getRoomId());
+    if (room == null) {
+        throw new RoomNotFoundException("Room not found with id: " + booking.getRoom().getRoomId());
+    }
+
+    // Kontrollera om rummet är tillgängligt för de angivna datumen
+    if (!bookingService.isRoomAvailable(room.getRoomId(), booking.getStartDate(), booking.getEndDate())) {
+        throw new RoomUnavailableException("Room is not available for the specified dates");
+    }
+
+    // Skapa bokningen och spara den i databasen
+    Booking createdBooking = bookingService.createBooking(booking.getUser().getUserId(), room.getRoomId(), booking.getStartDate(), booking.getEndDate());
+
+    // Returnera den skapade bokningen som en ResponseEntity med HTTP-status 201 Created
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdBooking);
 }
 
     @DeleteMapping("/")

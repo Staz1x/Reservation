@@ -32,11 +32,11 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Booking> bookings = new HashSet<>();
 
-    public static Room fromString(String roomId){
-        Room room = new Room();
-        room.setRoomId(Long.parseLong(roomId));
-        return room;
-    }
+//    public static Room fromString(String roomId){
+//        Room room = new Room();
+//        room.setRoomId(Long.parseLong(roomId));
+//        return room;
+//    }
 
 
 }
