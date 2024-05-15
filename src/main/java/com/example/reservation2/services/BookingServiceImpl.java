@@ -73,6 +73,8 @@ public class BookingServiceImpl implements BookingService{
         booking.setStartDate(startDate);
         booking.setEndDate(endDate);
 
+        booking = bookingRepository.save(booking);
+
         // Skapa bookingDates för varje dag mellan start- och slutdatum
         Set<BookingDate> bookingDates = new HashSet<>();
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
@@ -84,11 +86,11 @@ public class BookingServiceImpl implements BookingService{
         }
 
 
-        booking.setBookingDates(bookingDates);
+        bookingDateRepository.saveAll(bookingDates);
 
         // Spara bokningen och dess bookingDates i databasen
 
-        return bookingRepository.save(booking);
+        return booking;
     }
 
     @Override
