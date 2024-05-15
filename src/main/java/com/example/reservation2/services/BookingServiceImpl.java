@@ -11,6 +11,7 @@ import com.example.reservation2.repositories.BookingDateRepository;
 import com.example.reservation2.repositories.BookingRepository;
 import com.example.reservation2.repositories.RoomRepository;
 import com.example.reservation2.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -22,16 +23,12 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class BookingServiceImpl implements BookingService{
-
-
-
-
+public class BookingServiceImpl implements BookingService {
 
 
     private BookingRepository bookingRepository;
 
-    private  BookingDateRepository bookingDateRepository;
+    private BookingDateRepository bookingDateRepository;
 
     private RoomRepository roomRepository;
 
@@ -39,10 +36,9 @@ public class BookingServiceImpl implements BookingService{
     private UserRepository userRepository;
 
 
-
     @Autowired
     public BookingServiceImpl(BookingRepository bookingRepository, BookingDateRepository bookingDateRepository, RoomRepository roomRepository,
-                              UserRepository userRepository){
+                              UserRepository userRepository) {
         this.bookingRepository = bookingRepository;
         this.bookingDateRepository = bookingDateRepository;
         this.roomRepository = roomRepository;
@@ -50,7 +46,6 @@ public class BookingServiceImpl implements BookingService{
 
 
     }
-
 
 
     @Override
@@ -118,7 +113,11 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
+    @Transactional
     public void deleteBookingById(Long id) {
+        bookingDateRepository.deleteBookingDateByBooking_BookingId(id);
+
+
         bookingRepository.deleteById(id);
     }
 
