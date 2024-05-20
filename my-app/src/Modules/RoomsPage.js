@@ -11,7 +11,7 @@ function RoomsPage() {
 
     const getNumberOfNights = (startDate, endDate) => {
         const oneDay = 24 * 60 * 60 * 1000;
-        return Math.round(Math.abs((new Date(startDate) - new Date(endDate)) / oneDay));
+        return Math.round(Math.abs((new Date(startDate) - new Date(endDate)) / oneDay)-1);
     };
 
     const fetchAvailableRooms = async (startDate, endDate) => {
@@ -19,12 +19,12 @@ function RoomsPage() {
             const start = new Date(startDate).toISOString().split('T')[0];
             const end = new Date(endDate).toISOString().split('T')[0];
             const url = `http://localhost:8080/api/rooms/available/${start}/${end}`;
-            console.log('Fetching rooms with URL:', url); // Log URL
+            console.log('Fetching rooms with URL:', url); // Logga URL för felsökning
             const response = await fetch(url);
             const contentType = response.headers.get('content-type');
 
             if (response.ok) {
-                console.log("Response was ok")
+                console.log("Response was ok") //Log för felsökning
                 if (contentType && contentType.includes('application/json')) {
                     const roomsData = await response.json();
                     setAvailableRooms(roomsData);
@@ -53,9 +53,9 @@ function RoomsPage() {
     };
 
     useEffect(() => {
-        console.log('Initializing booking dates'); // Log to see if this runs more than once
+        console.log('Initializing booking dates'); // Log för felsökning med att funktionen kallas två gånger
         initializeBookingDates();
-    }, []); // Empty dependency array to ensure it runs only once
+    }, [initializeBookingDates]);
 
     const handleRoomSelection = (room) => {
         sessionStorage.setItem('selectedRoom', JSON.stringify(room));
@@ -64,17 +64,18 @@ function RoomsPage() {
     };
 
     return (
-        <div>
+        <div className="rooms-page">
             <h2>Available Rooms</h2>
-            <p>Selected Date Range: {startDate && endDate ? `${startDate.toDateString()} - ${endDate.toDateString()}` : 'Not selected'}</p>
-            <div>
+            <p className="date-range">
+                {startDate && endDate ? `${startDate.toDateString()} - ${endDate.toDateString()}` : 'Date range not selected'}
+            </p>
+            <div className="rooms-container">
                 {availableRooms.map((room, index) => (
-                    <div key={index}>
-                        <p>Room: {room.roomNumber}</p>
-                        <p>Price per Night: ${room.price}</p>
-                        <p>Type of Room: {room.roomType}</p>
-                        <p>Capacity: {room.capacity}</p>
-                        <p>Total Price: ${room.price * getNumberOfNights(startDate, endDate)}</p>
+                    <div key={index} className="room-card">
+                        <h3>Room {room.roomNumber}</h3>
+                        <p><strong>Price per Night:</strong> ${room.price}</p>
+                        <p><strong>Type of Room:</strong> {room.roomType}</p>
+                        <p><strong>Total Price:</strong> ${room.price * getNumberOfNights(startDate, endDate)}</p>
                         <Button onClick={() => handleRoomSelection(room)} text="Select Room" />
                     </div>
                 ))}
