@@ -7,10 +7,10 @@ function LoginPage() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
     const handleLogin = async () => {
         try {
-
             const response = await fetch("http://localhost:8080/api/users/login", {
                 method: "POST",
                 headers: {
@@ -20,11 +20,10 @@ function LoginPage() {
             });
 
             if (response.ok) {
-
                 navigate("/calendar");
             } else {
-
-                console.error("Login failed");
+                const errorMessage = await response.text();
+                setError(errorMessage); // Set error message state
             }
         } catch (error) {
             console.error("Error during login:", error);
@@ -32,9 +31,7 @@ function LoginPage() {
     };
 
     return (
-
         <div className="login-container">
-
             <form onSubmit={(e) => {
                 e.preventDefault();
                 handleLogin();
@@ -58,12 +55,12 @@ function LoginPage() {
                         className="login-input"
                     />
                 </label>
-                <Button type="submit" text="LOGIN"/>
+                <Button type="submit" text="LOGIN" />
+                {error && <p className="error-message">{error}</p>} {/* Display error message if exists */}
             </form>
+
         </div>
-
     );
-
 }
 
 export default LoginPage;

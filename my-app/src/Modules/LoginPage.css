@@ -4,6 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #d6eeff;
 }
 
 .login-form {
@@ -11,6 +12,7 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    background-color: #a2c7e5;
 }
 
 .login-form h2 {

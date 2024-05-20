@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         if (authService.authenticate(loginRequest.getEmail(), loginRequest.getPassword())) {
             return ResponseEntity.ok("Login successful");
         } else {

@@ -1,10 +1,12 @@
 
 body {
     text-align: center;
+    background-color: #d6eeff;
 }
 
 .calendarPage {
     margin-top: 120px;
+
 }
 
 .header {
@@ -21,5 +23,6 @@ body {
 
 .react-calendar {
     margin: auto;
+    background-color: #a2c7e5;
 }
 

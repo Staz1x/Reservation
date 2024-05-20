@@ -1,5 +1,5 @@
 import './RoomsPage.css';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import Button from './Button';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,17 +14,17 @@ function RoomsPage() {
         return Math.round(Math.abs((new Date(startDate) - new Date(endDate)) / oneDay)-1);
     };
 
-    const fetchAvailableRooms = async (startDate, endDate) => {
+    const fetchAvailableRooms = useCallback(async (startDate, endDate) => {
         try {
             const start = new Date(startDate).toISOString().split('T')[0];
             const end = new Date(endDate).toISOString().split('T')[0];
             const url = `http://localhost:8080/api/rooms/available/${start}/${end}`;
-            console.log('Fetching rooms with URL:', url); // Logga URL för felsökning
+            //console.log('Fetching rooms with URL:', url); // Logga URL för felsökning
             const response = await fetch(url);
             const contentType = response.headers.get('content-type');
 
             if (response.ok) {
-                console.log("Response was ok") //Log för felsökning
+                //console.log("Response was ok") //Log för felsökning
                 if (contentType && contentType.includes('application/json')) {
                     const roomsData = await response.json();
                     setAvailableRooms(roomsData);
@@ -38,9 +38,9 @@ function RoomsPage() {
         } catch (error) {
             console.error('Error fetching available rooms:', error);
         }
-    };
+    }, []);
 
-    const initializeBookingDates = () => {
+    const initializeBookingDates = useCallback(() => {
         const bookingStartDate = sessionStorage.getItem('bookingStartDate');
         const bookingEndDate = sessionStorage.getItem('bookingEndDate');
         if (bookingStartDate && bookingEndDate) {
@@ -50,10 +50,10 @@ function RoomsPage() {
         } else {
             console.error('Date range not found in sessionStorage.');
         }
-    };
+    }, [fetchAvailableRooms]);
 
     useEffect(() => {
-        console.log('Initializing booking dates'); // Log för felsökning med att funktionen kallas två gånger
+        //console.log('Initializing booking dates'); // Log för felsökning med att funktionen kallas två gånger
         initializeBookingDates();
     }, [initializeBookingDates]);
 

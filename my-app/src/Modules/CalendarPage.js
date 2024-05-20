@@ -35,7 +35,6 @@ function CalendarPage() {
                 selectRange={true}
                 minDate={new Date()}
                 maxDate={new Date(Date.now() + 60 * 24 * 60 * 60 * 1000)} // Kan max boka 60 dagar framåt
-                //value={[startDate, endDate]}
             />
             <Button
                 onClick={handleButtonClick}
