@@ -5,6 +5,7 @@ import com.example.reservation2.models.Room;
 import com.example.reservation2.services.BookingService;
 import com.example.reservation2.services.RoomService;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -29,8 +30,9 @@ public class RoomController {
         return roomService.getAllRooms();
     }
 
-    @GetMapping("/available")
-    public List<Room> getAvailableRooms(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate)
+    @GetMapping("/available/{startDate}/{endDate}")
+    public List<Room> getAvailableRooms(@PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                        @PathVariable("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate)
     {return bookingService.findAvailableRooms(startDate, endDate);}
 
     @GetMapping("/{id}")
