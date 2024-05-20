@@ -17,10 +17,8 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -30,19 +28,19 @@ public class BookingServiceImpl implements BookingService {
 
     private BookingDateRepository bookingDateRepository;
 
-    private RoomRepository roomRepository;
+    private RoomService roomService;
 
 
-    private UserRepository userRepository;
+    private UserService userService;
 
 
     @Autowired
-    public BookingServiceImpl(BookingRepository bookingRepository, BookingDateRepository bookingDateRepository, RoomRepository roomRepository,
-                              UserRepository userRepository) {
+    public BookingServiceImpl(BookingRepository bookingRepository, BookingDateRepository bookingDateRepository, RoomService roomService,
+                              UserService userService) {
         this.bookingRepository = bookingRepository;
         this.bookingDateRepository = bookingDateRepository;
-        this.roomRepository = roomRepository;
-        this.userRepository = userRepository;
+        this.roomService = roomService;
+        this.userService = userService;
 
 
     }
@@ -50,11 +48,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking createBooking(Long userId, Long roomId, LocalDate startDate, LocalDate endDate) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        User user = userService.getUserById(userId);
 
-        Room room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new RoomNotFoundException("Room not found"));
+        Room room = roomService.getRoomById(roomId);
 
         // Kontrollera om rummet är tillgängligt för de angivna datumen
         if (!isRoomAvailable(roomId, startDate, endDate)) {
@@ -136,5 +132,21 @@ public class BookingServiceImpl implements BookingService {
             }
         }
         return bookings;
+    }
+
+    @Override
+    public List<Room> findAvailableRooms(LocalDate startDate, LocalDate endDate) {
+        List<Room> allRoomsAvailable = roomService.getAllRooms();
+        List<BookingDate> allBookingDates = bookingDateRepository.findAll();
+
+        List<Long> bookedRoomsId = allBookingDates.stream().filter(bookingDate ->
+                (bookingDate.getDate().isAfter(startDate) || bookingDate.equals(startDate)) &&
+                        (bookingDate.getDate().isBefore(endDate) || bookingDate.equals(endDate)))
+                .map(bookingDate -> bookingDate.getBooking().getRoom().getRoomId()).collect(Collectors.toList());
+
+        List<Room> availableRooms = allRoomsAvailable.stream().filter(room ->
+                !bookedRoomsId.contains(room.getRoomId())).collect(Collectors.toList());
+
+        return availableRooms;
     }
 }

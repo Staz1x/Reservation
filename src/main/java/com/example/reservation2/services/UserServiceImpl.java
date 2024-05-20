@@ -1,5 +1,6 @@
 package com.example.reservation2.services;
 
+import com.example.reservation2.Exceptions.UserNotFoundException;
 import com.example.reservation2.models.Booking;
 import com.example.reservation2.models.User;
 import com.example.reservation2.repositories.RoleRepository;
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User not found"));
     }
 
     @Override

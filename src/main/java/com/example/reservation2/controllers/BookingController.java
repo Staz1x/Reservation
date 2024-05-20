@@ -44,6 +44,8 @@ public class BookingController {
         this.roomService = roomService;
     }
 
+
+
     @GetMapping
     public List<Booking> getAllBookings() {
         return bookingService.getAllBookings();

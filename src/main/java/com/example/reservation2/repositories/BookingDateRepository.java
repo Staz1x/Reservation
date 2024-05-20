@@ -8,4 +8,6 @@ import java.util.List;
 public interface BookingDateRepository extends JpaRepository<BookingDate, Long> {
 
     void deleteBookingDateByBooking_BookingId(Long Id);
+
+
 }

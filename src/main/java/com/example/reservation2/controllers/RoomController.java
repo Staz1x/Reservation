@@ -2,10 +2,12 @@ package com.example.reservation2.controllers;
 
 import com.example.reservation2.Exceptions.RoomNotFoundException;
 import com.example.reservation2.models.Room;
+import com.example.reservation2.services.BookingService;
 import com.example.reservation2.services.RoomService;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -14,15 +16,22 @@ public class RoomController {
 
     private RoomService roomService;
 
+    private BookingService bookingService;
 
-    public RoomController(RoomService roomService){
+
+    public RoomController(RoomService roomService, BookingService bookingService){
         this.roomService = roomService;
+        this.bookingService = bookingService;
     }
 
     @GetMapping("/")
     public List<Room> getAllRooms() {
         return roomService.getAllRooms();
     }
+
+    @GetMapping("/available")
+    public List<Room> getAvailableRooms(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate)
+    {return bookingService.findAvailableRooms(startDate, endDate);}
 
     @GetMapping("/{id}")
     public Room getRoomById(@PathVariable Long id) {
