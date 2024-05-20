@@ -1,41 +1,42 @@
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './CalendarPage.css';
-import {useNavigate} from 'react-router-dom';
-import {useState} from "react";
+import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
 import Button from "./Button";
-
-const minDate = Date.now();
-const today = new Date(minDate);
-const maxDate = today;
-
-console.log(today.toDateString());
-console.log(maxDate);
 
 function CalendarPage() {
     const navigate = useNavigate();
-    const [value, setValue] = useState(new Date());
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
-    function onChange(nextValue) {
-        setValue(nextValue);
-    }
+    const handleDateChange = (dates) => {
+        const [start, end] = dates;
+        setStartDate(start);
+        setEndDate(end);
+    };
 
     const handleButtonClick = () => {
-        navigate({
-            pathname: '/rooms',
-        });
+        if (startDate && endDate) {
+            // Spara datum till sessionStorage
+            sessionStorage.setItem('bookingStartDate', startDate.toISOString());
+            sessionStorage.setItem('bookingEndDate', endDate.toISOString());
+            navigate('/rooms');
+        } else {
+            console.error('Please select a date range.');
+        }
     };
 
     return (
         <div className="calendarPage">
-
-            <p className="header"> Select date for your stay</p>
+            <p className="header">Select date for your stay</p>
             <Calendar
-                onChange={onChange}
-                value={value}
-                minDate={new Date(minDate)}
-                //maxDate={new Date(maxDate)}
-                selectRange={true} />
+                onChange={handleDateChange}
+                selectRange={true}
+                minDate={new Date()}
+                maxDate={new Date(Date.now() + 60 * 24 * 60 * 60 * 1000)} // Kan max boka 60 dagar framåt
+                //value={[startDate, endDate]}
+            />
             <Button
                 onClick={handleButtonClick}
                 text="Book"
