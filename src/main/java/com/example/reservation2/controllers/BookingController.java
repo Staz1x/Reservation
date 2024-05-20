@@ -26,13 +26,13 @@ import java.util.List;
 @RequestMapping("/api/bookings")
 public class BookingController {
 
-    private BookingService bookingService;
+    private final BookingService bookingService;
 
     private BookingDateService bookingDateService;
 
-    private UserService userService;
+    private final UserService userService;
 
-    private RoomService roomService;
+    private final RoomService roomService;
 
 
 
