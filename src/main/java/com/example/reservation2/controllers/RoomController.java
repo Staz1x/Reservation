@@ -14,9 +14,9 @@ import java.util.List;
 @RequestMapping("/api/rooms")
 public class RoomController {
 
-    private RoomService roomService;
+    private final RoomService roomService;
 
-    private BookingService bookingService;
+    private final BookingService bookingService;
 
 
     public RoomController(RoomService roomService, BookingService bookingService){

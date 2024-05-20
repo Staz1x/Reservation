@@ -35,7 +35,7 @@ function RoomsPage() {
 
     const fetchAvailableRooms = async (startDate, endDate) => {
         try {
-            const response = await fetch(`/api/rooms/availability?startDate=${startDate}&endDate=${endDate}`);
+            const response = await fetch(`/api/rooms/availabile?startDate=${startDate}&endDate=${endDate}`);
             if (response.ok) {
                 const roomsData = await response.json();
                 setAvailableRooms(roomsData);
