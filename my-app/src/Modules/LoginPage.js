@@ -20,7 +20,9 @@ function LoginPage() {
             });
 
             if (response.ok) {
-                navigate("/calendar");
+                const data = await response.json();
+                sessionStorage.setItem("userId", data.userId);
+                navigate("/booking");
             } else {
                 const errorMessage = await response.text();
                 setError(errorMessage); // Set error message state

@@ -38,7 +38,7 @@ function CalendarPage() {
             />
             <Button
                 onClick={handleButtonClick}
-                text="Book"
+                text="Check rooms"
             />
         </div>
     );
