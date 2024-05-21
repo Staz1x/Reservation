@@ -4,21 +4,23 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import LoginPage from "./Modules/LoginPage"
+import LoginPage from "./Modules/LoginPage";
+import CreateUserPage from "./Modules/CreateUserPage";
 import CalendarPage from "./Modules/CalendarPage";
-import RoomsPage from "./Modules/RoomsPage"
+import RoomsPage from "./Modules/RoomsPage";
 import BookingPage from "./Modules/BookingPage";
-import "./App.css"
-
-
+import MyPage from "./Modules/MyPage";
+import "./App.css";
 
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<CalendarPage />} />
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/mypage" element={<MyPage />} />
+                <Route path="/calendar" element={<CalendarPage />} />
                 <Route path="/rooms" element={<RoomsPage />} />
-                <Route path="/login" element={<LoginPage />} />
+                <Route path="/createNew" element={<CreateUserPage />} />
                 <Route path="/booking" element={<BookingPage />} />
             </Routes>
         </Router>

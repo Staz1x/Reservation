@@ -1,4 +1,4 @@
-import './RoomsPage.css';
+import './Css/RoomsPage.css';
 import {useCallback, useEffect, useState} from 'react';
 import Button from './Button';
 import { useNavigate } from 'react-router-dom';

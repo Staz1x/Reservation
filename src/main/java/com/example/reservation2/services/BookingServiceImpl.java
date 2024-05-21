@@ -112,8 +112,6 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public void deleteBookingById(Long id) {
         bookingDateRepository.deleteBookingDateByBooking_BookingId(id);
-
-
         bookingRepository.deleteById(id);
     }
 

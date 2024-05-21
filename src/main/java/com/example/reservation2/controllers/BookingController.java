@@ -44,15 +44,13 @@ public class BookingController {
         this.roomService = roomService;
     }
 
-
-
     @GetMapping
     public List<Booking> getAllBookings() {
         return bookingService.getAllBookings();
     }
 
     @GetMapping("/booking/{userId}")
-    public List<Booking> getBookingsByUserId(@PathVariable Long userId) {
+    public List<Booking> getBookingsByUser(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
         if (user == null) {
             throw new UserNotFoundException("User not found with id: " + userId);

@@ -1,7 +1,7 @@
 import {useState} from "react";
 import Button from "./Button";
 import {useNavigate} from "react-router-dom";
-import './LoginPage.css'
+import './Css/LoginPage.css'
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -22,10 +22,10 @@ function LoginPage() {
             if (response.ok) {
                 const data = await response.json();
                 sessionStorage.setItem("userId", data.userId);
-                navigate("/booking");
+                navigate("/mypage");
             } else {
                 const errorMessage = await response.text();
-                setError(errorMessage); // Set error message state
+                setError(errorMessage);
             }
         } catch (error) {
             console.error("Error during login:", error);
@@ -58,7 +58,8 @@ function LoginPage() {
                     />
                 </label>
                 <Button type="submit" text="LOGIN" />
-                {error && <p className="error-message">{error}</p>} {/* Display error message if exists */}
+                {error && <p className="error-message">{error}</p>} {}
+                <Button onClick={() => navigate("/createNew")} text="Create new user" /> {}
             </form>
 
         </div>
