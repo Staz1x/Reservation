@@ -1,13 +1,15 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 import './Css/MyPage.css'
 
 function MyPage() {
-
+    const navigate = useNavigate();
     const [user, setUser] = useState({});
     const [bookings, setBookings] = useState([]);
 
     useEffect(() => {
-        const fetchUserInfo = async () => {
+        const fetchUser = async () => {
             try {
                 const userId = sessionStorage.getItem('userId');
                 const response = await fetch(`http://localhost:8080/api/users/${userId}`);
@@ -37,7 +39,7 @@ function MyPage() {
             }
         };
 
-        fetchUserInfo();
+        fetchUser();
         fetchBookings();
     }, []);
 
@@ -62,11 +64,12 @@ function MyPage() {
                     </ul>
                 ) : (
                     <p>No bookings found.</p>
+
                 )}
+                <Button onClick={() => navigate("/calendar")} text="Select Room" />
             </div>
         </div>
     );
-
 }
 
 export default MyPage();

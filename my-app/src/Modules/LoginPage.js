@@ -1,7 +1,7 @@
-import {useState} from "react";
+import { useState } from "react";
 import Button from "./Button";
-import {useNavigate} from "react-router-dom";
-import './Css/LoginPage.css'
+import { useNavigate } from "react-router-dom";
+import './Css/LoginPage.css';
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ function LoginPage() {
             if (response.ok) {
                 const data = await response.json();
                 sessionStorage.setItem("userId", data.userId);
-                navigate("/mypage");
+                navigate('/mypage');
             } else {
                 const errorMessage = await response.text();
                 setError(errorMessage);
@@ -61,7 +61,6 @@ function LoginPage() {
                 {error && <p className="error-message">{error}</p>} {}
                 <Button onClick={() => navigate("/createNew")} text="Create new user" /> {}
             </form>
-
         </div>
     );
 }
