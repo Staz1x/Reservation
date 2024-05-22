@@ -23,7 +23,7 @@ function CreateUserPage() {
             });
 
             if (response.ok) {
-                navigate("/login");
+                navigate('/home');
             } else {
                 const errorMessage = await response.text();
                 setError(errorMessage);
@@ -39,57 +39,59 @@ function CreateUserPage() {
                 e.preventDefault();
                 handleRegister();
             }} className="register-form">
-                <h2>Register new user</h2>
-                <label>
-                    First Name:
+                <h2>Create new user</h2>
+                <div className="form-group">
+                    <label>First Name:</label>
                     <input
                         type="text"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         className="register-input"
                     />
-                </label>
-                <label>
-                    Last Name:
+                </div>
+                <div className="form-group">
+                    <label>Last Name:</label>
                     <input
                         type="text"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         className="register-input"
                     />
-                </label>
-                <label>
-                    Phone number:
+                </div>
+                <div className="form-group">
+                    <label>Phone number:</label>
                     <input
                         type="text"
                         value={phoneNr}
                         onChange={(e) => setPhoneNr(e.target.value)}
                         className="register-input"
                     />
-                </label>
-                <label>
-                    Email:
+                </div>
+                <div className="form-group">
+                    <label>Email:</label>
                     <input
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="register-input"
                     />
-                </label>
-                <label>
-                    Password:
+                </div>
+                <div className="form-group">
+                    <label>Password:</label>
                     <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="register-input"
                     />
-                </label>
-                <Button type="submit" text="Create"/>
-                {error && <p className="error-message">{error}</p>} {}
+                </div>
+                <div className="buttons-container">
+                    <Button type="submit" text="Create"/>
+                </div>
+                {error && <p className="error-message">{error}</p>}
             </form>
         </div>
-    );
+);
 }
 
 export default CreateUserPage;

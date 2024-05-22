@@ -1,9 +1,10 @@
+import './Css/HomePage.css';
 import { useState } from "react";
 import Button from "./Button";
-import { useNavigate } from "react-router-dom";
-import './Css/LoginPage.css';
+import {useNavigate} from "react-router-dom";
 
-function LoginPage() {
+function HomePage() {
+
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -40,7 +41,7 @@ function LoginPage() {
             }} className="login-form">
                 <h2>Login</h2>
                 <label>
-                    Email:
+                    HOME:
                     <input
                         type="text"
                         value={email}
@@ -49,7 +50,7 @@ function LoginPage() {
                     />
                 </label>
                 <label>
-                    Password:
+                    PAGE:
                     <input
                         type="password"
                         value={password}
@@ -57,14 +58,13 @@ function LoginPage() {
                         className="login-input"
                     />
                 </label>
-                <div className="buttons-container">
-                    <Button type="submit" text="Login" />
-                    <Button onClick={() => navigate("/createNew")} text="Create new" />
-                </div>
-                {error && <p className="error-message">{error}</p>}
+                <Button type="submit" text="LOGIN" />
+                {error && <p className="error-message">{error}</p>} {}
+                <Button onClick={() => navigate("/createNew")} text="Create new user" /> {}
             </form>
         </div>
     );
+
 }
 
-export default LoginPage;
+export default HomePage;

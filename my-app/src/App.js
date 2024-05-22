@@ -9,6 +9,7 @@ import CreateUserPage from "./Modules/CreateUserPage";
 import CalendarPage from "./Modules/CalendarPage";
 import RoomsPage from "./Modules/RoomsPage";
 import BookingPage from "./Modules/BookingPage";
+import HomePage from "./Modules/HomePage";
 import "./App.css";
 
 
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/rooms" element={<RoomsPage />} />
                 <Route path="/createNew" element={<CreateUserPage />} />
                 <Route path="/booking" element={<BookingPage />} />
+                <Route path="/home" element={<HomePage />} />
             </Routes>
         </Router>
     );

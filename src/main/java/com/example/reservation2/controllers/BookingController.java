@@ -5,23 +5,19 @@ import com.example.reservation2.Exceptions.RoomNotFoundException;
 import com.example.reservation2.Exceptions.RoomUnavailableException;
 import com.example.reservation2.Exceptions.UserNotFoundException;
 import com.example.reservation2.models.Booking;
-import com.example.reservation2.models.BookingDate;
 import com.example.reservation2.models.Room;
 import com.example.reservation2.models.User;
-import com.example.reservation2.repositories.BookingRepository;
 import com.example.reservation2.services.BookingDateService;
 import com.example.reservation2.services.BookingService;
 import com.example.reservation2.services.RoomService;
 import com.example.reservation2.services.UserService;
-
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/api/bookings")
 public class BookingController {
@@ -61,36 +57,8 @@ public class BookingController {
         }
         return bookings;
     }
-/*    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Booking>> getBookingsByUserId(@PathVariable Long userId) {
-        User user = userService.getUserById(userId);
-        if (user == null) {
-            // User not found, return HTTP 404 Not Found
-            return ResponseEntity.notFound().build();
-        }
-        List<Booking> bookings = bookingService.getBookingsByUser(user);
-        if (bookings.isEmpty()) {
-            // No bookings found, return HTTP 204 No Content
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(bookings);
-    }*/
 
-//    @PostMapping("/")
-//    public ResponseEntity<?> createBooking(@Valid @RequestBody Booking booking, BindingResult bindingResult) {
-//        // Kontrollera om valideringsfel har inträffat
-//        if (bindingResult.hasErrors()) {
-//            // Om valideringsfel finns, returnera felmeddelanden
-//            return ResponseEntity.badRequest().body("Några obligatoriska attribut saknas eller är ogiltiga");
-//        }
-//
-//        // Annars fortsätt med att skapa bokningen
-//        Booking createdBooking = bookingService.createBooking(booking);
-//
-//        // Returnera den skapade bokningen som en ResponseEntity
-//        return ResponseEntity.ok(createdBooking);
-//    }
-@PostMapping("/")
+@PostMapping("/create")
 public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
     // Kontrollera om användaren finns
     User user = userService.getUserById(booking.getUser().getUserId());
@@ -120,7 +88,5 @@ public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
     void deleteBookingById(Long id){
         bookingService.deleteBookingById(id);
     }
-
-
 
 }

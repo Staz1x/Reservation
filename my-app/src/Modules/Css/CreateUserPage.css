@@ -1,23 +1,50 @@
 .register-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 20px;
+    height: 100vh;
+    background-color: #d6eeff;
 }
 
 .register-form {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #a2c7e5;
 }
 
-.register-input {
+.form-group {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
+}
+
+label {
+    width: 150px; /* Adjust this width as needed */
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+input {
+    flex: 1;
     padding: 8px;
     font-size: 16px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .error-message {
     color: red;
     margin-top: 10px;
+    text-align: center;
 }
