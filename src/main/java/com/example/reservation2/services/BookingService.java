@@ -22,7 +22,7 @@ public interface BookingService{
 
     void deleteBookingById(Long id);
 
-    List<Booking> findBookingsByRoomIdAndStartDateBetweenOrEndDateBetween(Long roomId, LocalDate startDate, LocalDate endDate, LocalDate startDate2, LocalDate endDate2);
+    List<Booking> findBookingsByRoomIdAndStartDateBetweenOrEndDateBetween(Long roomId, LocalDate startDate, LocalDate endDate);
 
     List<Room> findAvailableRooms(LocalDate startDate, LocalDate endDate);
 

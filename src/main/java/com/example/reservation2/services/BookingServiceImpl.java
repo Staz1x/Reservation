@@ -103,7 +103,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public boolean isRoomAvailable(Long roomId, LocalDate startDate, LocalDate endDate) {
         // Hämta alla bokningar för rummet mellan de angivna datumen
-        List<Booking> bookings = findBookingsByRoomIdAndStartDateBetweenOrEndDateBetween(roomId, startDate, endDate, startDate, endDate);
+        List<Booking> bookings = findBookingsByRoomIdAndStartDateBetweenOrEndDateBetween(roomId, startDate, endDate);
 
         // Om det inte finns några bokningar, är rummet tillgängligt
         return bookings.isEmpty();
@@ -117,16 +117,14 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> findBookingsByRoomIdAndStartDateBetweenOrEndDateBetween(Long roomId, LocalDate startDate, LocalDate endDate, LocalDate startDate2, LocalDate endDate2) {
+    public List<Booking> findBookingsByRoomIdAndStartDateBetweenOrEndDateBetween(Long roomId, LocalDate startDate, LocalDate endDate) {
         // Implementera logiken för att hämta bokningar för ett rum och mellan två perioder här
         List<Booking> bookings = new ArrayList<>();
         // Exempellogik: här kan du filtrera och hämta de bokningar som matchar dina kriterier
         for (Booking booking : getAllBookings()) {
             if (booking.getRoom().getRoomId() == roomId &&
                     ((booking.getStartDate().isAfter(startDate) || booking.getStartDate().isEqual(startDate)) &&
-                            (booking.getStartDate().isBefore(endDate) || booking.getStartDate().isEqual(endDate))) ||
-                    ((booking.getEndDate().isAfter(startDate2) || booking.getEndDate().isEqual(startDate2)) &&
-                            (booking.getEndDate().isBefore(endDate2) || booking.getEndDate().isEqual(endDate2)))) {
+                            (booking.getStartDate().isBefore(endDate) || booking.getStartDate().isEqual(endDate)))) {
                 bookings.add(booking);
             }
         }
