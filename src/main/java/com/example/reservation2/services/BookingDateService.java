@@ -9,7 +9,7 @@ public interface BookingDateService {
     BookingDate saveBookingDate(BookingDate bookingDate);
 
 
-    List<BookingDate> findBAllBookingDates();
+    List<BookingDate> findAllBookingDates();
 
 
 }
