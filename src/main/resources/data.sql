@@ -7,12 +7,17 @@ INSERT INTO roles (role_name) VALUES
 -- users data
 INSERT INTO users (first_name, last_name, phone_nr, email, password, role_id) VALUES
                                                                                   ('John', 'Doe', '123456789', 'john@example.com', 'password', 1),
-                                                                                  ('May', 'Day', '987654321', 'may@example.com', 'password456', 2);
+                                                                                  ('May', 'Day', '987654321', 'may@example.com', 'password456', 2),
+                                                                                  ('Charles', 'Johnsson', '0709876543', 'charles.johnsson@test.se', 'best-password-ever', 2);
 
 -- rooms data
 INSERT INTO rooms (room_number, price, room_type, capacity) VALUES
                                                                 ('101', 100.00, 'Standard', 2),
-                                                                ('102', 150.00, 'Deluxe', 4);
+                                                                ('102', 150.00, 'Deluxe', 4),
+                                                                ('103', 500.00, 'Family Room', 6),
+                                                                ('201', 300.00, 'Standard Comfort', 3),
+                                                                ('202', 800.00, 'Junior Suite', 2),
+                                                                ('203', 1000.00, 'Deluxe Suite with balcony', 3);
 
 
 -- bookings data
