@@ -9,7 +9,6 @@ import CreateUserPage from "./Modules/CreateUserPage";
 import CalendarPage from "./Modules/CalendarPage";
 import RoomsPage from "./Modules/RoomsPage";
 import BookingPage from "./Modules/BookingPage";
-import MyPage from "./Modules/MyPage";
 import "./App.css";
 
 
@@ -18,7 +17,6 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<LoginPage />} />
-                <Route path="/mypage" element={<MyPage />} />
                 <Route path="/calendar" element={<CalendarPage />} />
                 <Route path="/rooms" element={<RoomsPage />} />
                 <Route path="/createNew" element={<CreateUserPage />} />

@@ -22,7 +22,7 @@ function LoginPage() {
             if (response.ok) {
                 const data = await response.json();
                 sessionStorage.setItem("userId", data.userId);
-                navigate('/mypage');
+                navigate('/calendar');
             } else {
                 const errorMessage = await response.text();
                 setError(errorMessage);

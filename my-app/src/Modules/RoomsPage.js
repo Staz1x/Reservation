@@ -60,7 +60,7 @@ function RoomsPage() {
     const handleRoomSelection = (room) => {
         sessionStorage.setItem('selectedRoom', JSON.stringify(room));
         sessionStorage.setItem('totalPrice', room.price * getNumberOfNights(startDate, endDate));
-        navigate('/login');
+        navigate('/booking');
     };
 
     return (
