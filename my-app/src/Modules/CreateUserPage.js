@@ -23,6 +23,8 @@ function CreateUserPage() {
             });
 
             if (response.ok) {
+                const data = await response.json();
+                sessionStorage.setItem("userId", data.userId); // Nytt användarId läggs in i sessionStorage för att inte få "User not logged in"-error
                 navigate('/home');
             } else {
                 const errorMessage = await response.text();

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import './Css/BookingPage.css';
 import Button from "./Button";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function BookingPage() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [room, setRoom] = useState(null);
@@ -13,7 +13,7 @@ function BookingPage() {
 
     useEffect(() => {
         const start = sessionStorage.getItem("bookingStartDate");
-        const end = sessionStorage.getItem("bookingEndDate")
+        const end = sessionStorage.getItem("bookingEndDate");
         const selectedRoom = JSON.parse(sessionStorage.getItem('selectedRoom'));
         const price = sessionStorage.getItem('totalPrice');
         const userId = sessionStorage.getItem('userId');
@@ -57,9 +57,10 @@ function BookingPage() {
                 if (response.ok) {
                     const data = await response.json();
                     console.log("Booking created:", data);
-                    navigate('/home')
+                    navigate('/home');
                 } else {
-                    console.error('Failed to create booking');
+                    const errorMessage = await response.text();
+                    console.error('Failed to create booking:', errorMessage);
                 }
             } catch (error) {
                 console.error('Error creating booking:', error);

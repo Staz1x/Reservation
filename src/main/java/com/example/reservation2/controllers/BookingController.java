@@ -61,10 +61,13 @@ public class BookingController {
 @PostMapping("/create")
 public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
     // Kontrollera om användaren finns
+    System.out.println("Booking started");
     User user = userService.getUserById(booking.getUser().getUserId());
     if (user == null) {
+        System.out.println("Hittar inte ID");
         throw new UserNotFoundException("User not found with id: " + booking.getUser().getUserId());
     }
+    System.out.println("Hittar ID");
 
     // Kontrollera om rummet finns
     Room room = roomService.getRoomById(booking.getRoom().getRoomId());
@@ -84,9 +87,15 @@ public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
     return ResponseEntity.status(HttpStatus.CREATED).body(createdBooking);
 }
 
-    @DeleteMapping("/")
-    void deleteBookingById(Long id){
+    /*@DeleteMapping("/")
+    void deleteBookingById(@RequestParam Long id){
         bookingService.deleteBookingById(id);
+    }*/
+
+    @DeleteMapping("/")
+    public ResponseEntity<?> deleteBookingById(@RequestParam Long id) {
+        bookingService.deleteBookingById(id);
+        return ResponseEntity.ok().build();
     }
 
 }

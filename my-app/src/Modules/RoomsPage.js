@@ -75,6 +75,7 @@ function RoomsPage() {
                         <h3>Room {room.roomNumber}</h3>
                         <p><strong>Price per Night:</strong> ${room.price}</p>
                         <p><strong>Type of Room:</strong> {room.roomType}</p>
+                        <p><strong>Capacity:</strong> {room.capacity} people</p>
                         <p><strong>Total Price:</strong> ${room.price * getNumberOfNights(startDate, endDate)}</p>
                         <Button onClick={() => handleRoomSelection(room)} text="Select Room" />
                     </div>
