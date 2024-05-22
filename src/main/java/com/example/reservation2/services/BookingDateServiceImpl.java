@@ -23,7 +23,7 @@ public class BookingDateServiceImpl implements BookingDateService{
     }
 
     @Override
-    public List<BookingDate> findBAllBookingDates() {
+    public List<BookingDate> findAllBookingDates() {
 
         return null;
     }

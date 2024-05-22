@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +51,7 @@ public class RoomServiceImplTest {
     public void testGetRoomById() {
 
         Room room = new Room(1L, "101", BigDecimal.valueOf(100), "Single", 1);
-        when(roomRepository.getReferenceById(1L)).thenReturn(room);
+        when(roomRepository.findById(1L)).thenReturn(Optional.of(room));
 
         Room result = roomService.getRoomById(1L);
 

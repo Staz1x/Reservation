@@ -72,7 +72,7 @@ public class BookingServiceImpl implements BookingService {
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
             BookingDate bookingDate = new BookingDate();
             bookingDate.setDate(date);
-            bookingDate.setBooking(booking);//Need to fix a bookingID, now its
+            bookingDate.setBooking(booking);
             bookingDate.setRoom(room);
             bookingDates.add(bookingDate);
         }
@@ -140,8 +140,8 @@ public class BookingServiceImpl implements BookingService {
         List<BookingDate> allBookingDates = bookingDateRepository.findAll();
 
         List<Long> bookedRoomsId = allBookingDates.stream().filter(bookingDate ->
-                (bookingDate.getDate().isAfter(startDate) || bookingDate.equals(startDate)) &&
-                        (bookingDate.getDate().isBefore(endDate) || bookingDate.equals(endDate)))
+                        (bookingDate.getDate().isAfter(startDate) || bookingDate.equals(startDate)) &&
+                                (bookingDate.getDate().isBefore(endDate) || bookingDate.equals(endDate)))
                 .map(bookingDate -> bookingDate.getBooking().getRoom().getRoomId()).collect(Collectors.toList());
 
         List<Room> availableRooms = allRoomsAvailable.stream().filter(room ->

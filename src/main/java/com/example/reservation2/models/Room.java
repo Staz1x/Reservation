@@ -34,6 +34,14 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Booking> bookings = new HashSet<>();
 
+    public Room(long roomId, String roomNumber, BigDecimal price, String roomType, int capacity) {
+        this.roomId = roomId;
+        this.roomNumber = roomNumber;
+        this.price = price;
+        this.roomType = roomType;
+        this.capacity = capacity;
+    }
+
 //    public static Room fromString(String roomId){
 //        Room room = new Room();
 //        room.setRoomId(Long.parseLong(roomId));
