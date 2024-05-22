@@ -52,7 +52,7 @@ class BookingServiceTest {
         Role role = new Role();
 
 
-        role.setId(1L);
+        role.setRoleId(1L);
         role.setRoleName(UserRole.USER);
 
         mockUser.setUserId(1);
