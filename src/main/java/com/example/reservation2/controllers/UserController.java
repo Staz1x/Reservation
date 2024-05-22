@@ -1,5 +1,6 @@
 package com.example.reservation2.controllers;
 
+import com.example.reservation2.Exceptions.UserNotFoundException;
 import com.example.reservation2.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import com.example.reservation2.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000/")
 @RestController
@@ -29,11 +31,22 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        if (authService.authenticate(loginRequest.getEmail(), loginRequest.getPassword())) {
-            return ResponseEntity.ok("Login successful");
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        User user = authService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+        if (user != null) {
+            return ResponseEntity.ok(Map.of("message", "Login successful", "userId", user.getUserId()));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        }
+    }
+
+    @GetMapping("/{id}/name")
+    public ResponseEntity<String> getUserNameById(@PathVariable Long id){
+        try {
+            User user = userService.getUserById(id);
+            return ResponseEntity.ok(user.getFirstName() + " " + user.getLastName());
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
 

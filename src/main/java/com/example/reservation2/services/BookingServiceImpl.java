@@ -17,6 +17,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -112,8 +113,6 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public void deleteBookingById(Long id) {
         bookingDateRepository.deleteBookingDateByBooking_BookingId(id);
-
-
         bookingRepository.deleteById(id);
     }
 
@@ -150,4 +149,19 @@ public class BookingServiceImpl implements BookingService {
 
         return availableRooms;
     }
+
+    /*public boolean deleteBooking(Long bookingId) {
+        Optional<Booking> booking = bookingRepository.findById(bookingId);
+        if (booking.isPresent()) {
+            LocalDate now = LocalDate.now();
+            LocalDate bookingStartDate = booking.get().getStartDate();
+            long daysBetween = ChronoUnit.DAYS.between(now, bookingStartDate);
+            if (daysBetween > 1) { // Ensure there is more than one day difference
+                bookingRepository.deleteById(bookingId);
+                return true;
+            }
+        }
+        return false;
+    }*/
+
 }

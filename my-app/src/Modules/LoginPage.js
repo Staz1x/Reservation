@@ -1,16 +1,16 @@
-import {useState} from "react";
+import { useState } from "react";
 import Button from "./Button";
-import {useNavigate} from "react-router-dom";
-import './LoginPage.css'
+import { useNavigate } from "react-router-dom";
+import './Css/LoginPage.css';
 
 function LoginPage() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
     const handleLogin = async () => {
         try {
-
             const response = await fetch("http://localhost:8080/api/users/login", {
                 method: "POST",
                 headers: {
@@ -20,11 +20,12 @@ function LoginPage() {
             });
 
             if (response.ok) {
-
-                navigate("/calendar");
+                const data = await response.json();
+                sessionStorage.setItem("userId", data.userId);
+                navigate('/home');
             } else {
-
-                console.error("Login failed");
+                const errorMessage = await response.text();
+                setError(errorMessage);
             }
         } catch (error) {
             console.error("Error during login:", error);
@@ -32,9 +33,7 @@ function LoginPage() {
     };
 
     return (
-
         <div className="login-container">
-
             <form onSubmit={(e) => {
                 e.preventDefault();
                 handleLogin();
@@ -58,12 +57,14 @@ function LoginPage() {
                         className="login-input"
                     />
                 </label>
-                <Button type="submit" text="LOGIN"/>
+                <div className="buttons-container">
+                    <Button type="submit" text="Login" />
+                    <Button onClick={() => navigate("/createNew")} text="Create new" />
+                </div>
+                {error && <p className="error-message">{error}</p>}
             </form>
         </div>
-
     );
-
 }
 
 export default LoginPage;

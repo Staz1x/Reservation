@@ -1,6 +1,6 @@
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './CalendarPage.css';
+import './Css/CalendarPage.css';
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import Button from "./Button";
@@ -35,11 +35,10 @@ function CalendarPage() {
                 selectRange={true}
                 minDate={new Date()}
                 maxDate={new Date(Date.now() + 60 * 24 * 60 * 60 * 1000)} // Kan max boka 60 dagar framåt
-                //value={[startDate, endDate]}
             />
             <Button
                 onClick={handleButtonClick}
-                text="Book"
+                text="Check rooms"
             />
         </div>
     );

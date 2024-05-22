@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomController {
 
-    private RoomService roomService;
+    private final RoomService roomService;
 
-    private BookingService bookingService;
+    private final BookingService bookingService;
 
 
     public RoomController(RoomService roomService, BookingService bookingService){
@@ -31,9 +32,11 @@ public class RoomController {
     }
 
     @GetMapping("/available/{startDate}/{endDate}")
-    public List<Room> getAvailableRooms(@PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                        @PathVariable("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate)
-    {return bookingService.findAvailableRooms(startDate, endDate);}
+    public List<Room> getAvailableRooms(
+            @PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return bookingService.findAvailableRooms(startDate, endDate);
+    }
 
     @GetMapping("/{id}")
     public Room getRoomById(@PathVariable Long id) {

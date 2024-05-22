@@ -18,7 +18,7 @@ public interface BookingService{
 
     List<Booking> getBookingsByUser(User user);
 
-    public boolean isRoomAvailable(Long roomId, LocalDate startDate, LocalDate endDate);
+    boolean isRoomAvailable(Long roomId, LocalDate startDate, LocalDate endDate);
 
     void deleteBookingById(Long id);
 
