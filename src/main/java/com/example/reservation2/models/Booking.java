@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -41,6 +43,7 @@ public class Booking {
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<BookingDate> bookingDates = new HashSet<>();
 
+    @CreationTimestamp
     private Timestamp bookingDate;
 
 

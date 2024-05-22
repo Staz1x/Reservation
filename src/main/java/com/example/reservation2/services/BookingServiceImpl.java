@@ -133,6 +133,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public List<Room> findAvailableRooms(LocalDate startDate, LocalDate endDate) {
         List<Room> allRoomsAvailable = roomService.getAllRooms();
         List<BookingDate> allBookingDates = bookingDateRepository.findAll();
