@@ -1,5 +1,7 @@
 package com.example.reservation2.services;
 
+import com.example.reservation2.Exceptions.RoomNotFoundException;
+import com.example.reservation2.Exceptions.UserNotFoundException;
 import com.example.reservation2.models.Room;
 import com.example.reservation2.repositories.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -50,10 +53,15 @@ public class RoomServiceImplTest {
     @Test
     public void testGetRoomById() {
 
+        long invalidRoomId = -1L;
+
         Room room = new Room(1L, "101", BigDecimal.valueOf(100), "Single", 1);
         when(roomRepository.findById(1L)).thenReturn(Optional.of(room));
 
         Room result = roomService.getRoomById(1L);
+
+        assertThatExceptionOfType(RoomNotFoundException.class).isThrownBy(() ->
+                roomService.getRoomById(invalidRoomId)).withMessage("Room not found");
 
         assertNotNull(result);
         assertEquals("101", result.getRoomNumber());

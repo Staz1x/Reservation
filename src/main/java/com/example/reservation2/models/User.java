@@ -2,6 +2,7 @@ package com.example.reservation2.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
@@ -18,6 +19,7 @@ import java.util.Set;
 @Table(name = "users")
 @Getter
 @Setter
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
     @Id

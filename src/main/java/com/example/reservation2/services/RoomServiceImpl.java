@@ -1,5 +1,6 @@
 package com.example.reservation2.services;
 
+import com.example.reservation2.Exceptions.RoomNotFoundException;
 import com.example.reservation2.Exceptions.RoomUnavailableException;
 import com.example.reservation2.models.Room;
 import com.example.reservation2.repositories.RoomRepository;
@@ -25,7 +26,7 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     public Room getRoomById(Long id) {
-        return roomRepository.findById(id).orElseThrow(()->new RoomUnavailableException("Room not available"));
+        return roomRepository.findById(id).orElseThrow(()->new RoomNotFoundException("Room not found"));
     }
 
     @Override

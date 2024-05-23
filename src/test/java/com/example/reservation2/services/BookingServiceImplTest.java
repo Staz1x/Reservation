@@ -1,5 +1,6 @@
 package com.example.reservation2.services;
 
+import com.example.reservation2.Exceptions.BookingNotFoundException;
 import com.example.reservation2.enums.UserRole;
 import com.example.reservation2.models.*;
 import com.example.reservation2.repositories.BookingDateRepository;
@@ -17,12 +18,13 @@ import java.time.LocalDate;
 import java.util.*;
 import java.sql.Date;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-class BookingServiceTest {
+class BookingServiceImplTest {
 
     @Mock
     private BookingRepository bookingRepository;
@@ -225,15 +227,22 @@ class BookingServiceTest {
 
         Long bookingId = 5L;
 
-        Long falseBookingId = 1L;
+
+
+        Long invalidBooking = -1L;
 
         when(bookingRepository.findById(bookingId)).thenReturn(java.util.Optional.ofNullable(mockBooking));
 
         Booking actualBooking = bookingService.getBookingById(bookingId);
-        Booking falseBooking = bookingService.getBookingById(falseBookingId);
+
 
         assertEquals(mockBooking, actualBooking);
-        assertNotEquals(mockBooking, falseBooking);
+
+
+        assertThatExceptionOfType(BookingNotFoundException.class).isThrownBy(() ->
+                bookingService.getBookingById(invalidBooking)).withMessage("Booking not found");
+
+
 
         verify(bookingRepository, times(1)).findById(bookingId);
 

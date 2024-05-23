@@ -1,5 +1,6 @@
 package com.example.reservation2.services;
 
+import com.example.reservation2.Exceptions.BookingNotFoundException;
 import com.example.reservation2.Exceptions.RoomNotFoundException;
 import com.example.reservation2.Exceptions.RoomUnavailableException;
 import com.example.reservation2.Exceptions.UserNotFoundException;
@@ -53,21 +54,23 @@ public class BookingServiceImpl implements BookingService {
 
         Room room = roomService.getRoomById(roomId);
 
-        // Kontrollera om rummet är tillgängligt för de angivna datumen
+        // Check Room availability
         if (!isRoomAvailable(roomId, startDate, endDate)) {
             throw new RoomUnavailableException("Room is not available for the specified dates");
         }
 
-        // Skapa en ny bokning
+        // Create a booking
         Booking booking = new Booking();
         booking.setUser(user);
         booking.setRoom(room);
         booking.setStartDate(startDate);
         booking.setEndDate(endDate);
 
+        // Save booking, BookingDates need a bookingId
+
         booking = bookingRepository.save(booking);
 
-        // Skapa bookingDates för varje dag mellan start- och slutdatum
+        // Create bookingDates for every day in the booking
         Set<BookingDate> bookingDates = new HashSet<>();
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
             BookingDate bookingDate = new BookingDate();
@@ -76,23 +79,25 @@ public class BookingServiceImpl implements BookingService {
             bookingDate.setRoom(room);
             bookingDates.add(bookingDate);
         }
+        //Save bookingDates to database
 
 
         bookingDateRepository.saveAll(bookingDates);
 
-        // Spara bokningen och dess bookingDates i databasen
+        // Return the booking.
 
         return booking;
     }
 
     @Override
+    @Transactional
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
     }
 
     @Override
     public Booking getBookingById(Long id) {
-        return bookingRepository.findById(id).orElse(null);
+        return bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException("Booking not found"));
     }
 
     @Override
@@ -102,10 +107,10 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public boolean isRoomAvailable(Long roomId, LocalDate startDate, LocalDate endDate) {
-        // Hämta alla bokningar för rummet mellan de angivna datumen
+        // check all bookings for a specific room to see if It's available or not.
         List<Booking> bookings = findBookingsByRoomIdAndStartDateBetweenOrEndDateBetween(roomId, startDate, endDate);
 
-        // Om det inte finns några bokningar, är rummet tillgängligt
+        // If there are no bookings, return true.
         return bookings.isEmpty();
     }
 
@@ -118,9 +123,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<Booking> findBookingsByRoomIdAndStartDateBetweenOrEndDateBetween(Long roomId, LocalDate startDate, LocalDate endDate) {
-        // Implementera logiken för att hämta bokningar för ett rum och mellan två perioder här
+
         List<Booking> bookings = new ArrayList<>();
-        // Exempellogik: här kan du filtrera och hämta de bokningar som matchar dina kriterier
+        //Find bookings with specific room withing specific date-range and add them to a list
         for (Booking booking : getAllBookings()) {
             if (booking.getRoom().getRoomId() == roomId &&
                     ((booking.getStartDate().isAfter(startDate) || booking.getStartDate().isEqual(startDate)) &&
@@ -137,13 +142,18 @@ public class BookingServiceImpl implements BookingService {
         List<Room> allRoomsAvailable = roomService.getAllRooms();
         List<BookingDate> allBookingDates = bookingDateRepository.findAll();
 
-        List<Long> bookedRoomsId = allBookingDates.stream().filter(bookingDate ->
-                        (bookingDate.getDate().isAfter(startDate) || bookingDate.equals(startDate)) &&
-                                (bookingDate.getDate().isBefore(endDate) || bookingDate.equals(endDate)))
-                .map(bookingDate -> bookingDate.getBooking().getRoom().getRoomId()).collect(Collectors.toList());
 
-        List<Room> availableRooms = allRoomsAvailable.stream().filter(room ->
-                !bookedRoomsId.contains(room.getRoomId())).collect(Collectors.toList());
+        List<Long> bookedRoomsId = allBookingDates.stream()
+                .filter(bookingDate ->
+                        !bookingDate.getDate().isBefore(startDate) && bookingDate.getDate().isBefore(endDate))
+                .map(bookingDate -> bookingDate.getBooking().getRoom().getRoomId())
+                .distinct()
+                .collect(Collectors.toList());
+
+
+        List<Room> availableRooms = allRoomsAvailable.stream()
+                .filter(room -> !bookedRoomsId.contains(room.getRoomId()))
+                .collect(Collectors.toList());
 
         return availableRooms;
     }

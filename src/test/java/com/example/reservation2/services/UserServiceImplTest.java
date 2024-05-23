@@ -1,5 +1,6 @@
 package com.example.reservation2.services;
 
+import com.example.reservation2.Exceptions.UserNotFoundException;
 import com.example.reservation2.enums.UserRole;
 import com.example.reservation2.models.Role;
 import com.example.reservation2.models.User;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -63,12 +65,15 @@ class UserServiceImplTest {
     void getUserById() {
 
         Long userId = 1L;
+        Long invalidUserId = -1L;
 
         when(userRepository.findById(userId)).thenReturn(java.util.Optional.ofNullable(mockUser));
 
         User trueUser = userService.getUserById(userId);
 
         assertEquals(trueUser, mockUser);
+        assertThatExceptionOfType(UserNotFoundException.class).isThrownBy(() ->
+                userService.getUserById(invalidUserId)).withMessage("User not found");
 
         verify(userRepository, times(1)).findById(userId);
 
