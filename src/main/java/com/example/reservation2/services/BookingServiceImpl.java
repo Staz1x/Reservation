@@ -72,7 +72,7 @@ public class BookingServiceImpl implements BookingService {
 
         // Create bookingDates for every day in the booking
         Set<BookingDate> bookingDates = new HashSet<>();
-        for (LocalDate date = startDate; !date.isAfter(endDate)|| date.isEqual(endDate)  ; date = date.plusDays(1)) {
+        for (LocalDate date = startDate; !date.isAfter(endDate)|| date.isEqual(endDate); date = date.plusDays(1)) {
             BookingDate bookingDate = new BookingDate();
             bookingDate.setDate(date);
             bookingDate.setBooking(booking);
